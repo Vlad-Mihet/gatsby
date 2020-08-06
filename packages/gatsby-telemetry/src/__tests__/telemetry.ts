@@ -38,4 +38,18 @@ describe(`Telemetry`, () => {
       )
     })
   })
+
+  describe(`allows overriding defaults`, () => {
+    it(`allows overriding componentId`, () => {
+      const t = new AnalyticsTracker({ componentId: `desktop` })
+      t.buildAndStoreEvent(`demo`, {})
+      expect(
+        (EventStorage as jest.Mock).mock.instances[1].addEvent
+      ).toHaveBeenCalledWith(
+        expect.objectContaining({
+          componentId: `desktop`,
+        })
+      )
+    })
+  })
 })
